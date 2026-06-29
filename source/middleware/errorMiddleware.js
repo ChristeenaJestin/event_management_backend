@@ -1,15 +1,15 @@
+import logger from "../utils/logger.js";
+import { errorResponse } from "../utils/responseHandler.js";
+
 const errorMiddleware = (err, req, res, next) => {
 
-  console.error("ERROR:", err);
+  logger.error(err.message);
 
-  res.status(err.status || 500).json({
-    success: false,
-    message: err.message || "Internal Server Error",
-    stack:
-      process.env.NODE_ENV === "development"
-        ? err.stack
-        : undefined,
-  });
+  errorResponse(
+    res,
+    err.status || 500,
+    err.message || "Internal Server Error"
+  );
 
 };
 
