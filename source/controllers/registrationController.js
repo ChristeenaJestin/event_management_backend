@@ -1,47 +1,39 @@
 import * as registrationService from "../services/registrationService.js";
 
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
   try {
 
-    const registration = await registrationService.register(
-      req.user.id,
-      req.params.id
-    );
+    const registration =
+      await registrationService.registerForEvent(
+        req.user.id,
+        req.params.id
+      );
 
     res.status(201).json({
       success: true,
       message: "Registered successfully",
-      data: registration
+      data: registration,
     });
 
-  } catch (err) {
-
-    res.status(400).json({
-      success: false,
-      message: err.message
-    });
-
+  } catch (error) {
+    next(error);
   }
 };
 
-export const getParticipants = async (req, res) => {
-
+export const getParticipants = async (req, res, next) => {
   try {
 
-    const participants = await registrationService.getParticipants(req.params.id);
+    const participants =
+      await registrationService.getParticipants(
+        req.params.id
+      );
 
     res.status(200).json({
       success: true,
-      data: participants
+      data: participants,
     });
 
-  } catch (err) {
-
-    res.status(500).json({
-      success: false,
-      message: err.message
-    });
-
+  } catch (error) {
+    next(error);
   }
-
 };

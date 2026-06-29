@@ -6,6 +6,7 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import registrationRoutes from "./routes/registrationRoutes.js";
+import errorMiddleware from "./middleware/errorMiddleware.js";
 
 const app = express();
 
@@ -24,5 +25,9 @@ app.get("/", (req, res) => {
     message: "Event Management API Running",
   });
 });
+
+
+app.use(errorMiddleware);
+
 
 export default app;

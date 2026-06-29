@@ -3,7 +3,7 @@ import {
   registerService,
 } from "../services/authService.js";
 
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
   try {
 
     const user = await registerService(req.body);
@@ -15,16 +15,11 @@ export const register = async (req, res) => {
     });
 
   } catch (error) {
-
-    res.status(400).json({
-      success: false,
-      message: error.message,
-    });
-
+    next(error);
   }
 };
 
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   try {
 
     const result = await loginService(req.body);
@@ -37,12 +32,7 @@ export const login = async (req, res) => {
     });
 
   } catch (error) {
-
-    res.status(400).json({
-      success: false,
-      message: error.message,
-    });
-
+    next(error);
   }
 };
 

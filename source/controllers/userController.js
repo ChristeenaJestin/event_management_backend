@@ -1,34 +1,28 @@
 import * as userService from "../services/userService.js";
 
-export const getProfile = async (req, res) => {
+export const getProfile = async (req, res, next) => {
   try {
     const user = await userService.getProfile(req.user.id);
 
     res.status(200).json({
       success: true,
-      data: user
+      data: user,
     });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: err.message
-    });
+  } catch (error) {
+    next(error);
   }
 };
 
-export const updateProfile = async (req, res) => {
+export const updateProfile = async (req, res, next) => {
   try {
     const user = await userService.updateProfile(req.user.id, req.body);
 
     res.status(200).json({
       success: true,
       message: "Profile updated successfully",
-      data: user
+      data: user,
     });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: err.message
-    });
+  } catch (error) {
+    next(error);
   }
 };

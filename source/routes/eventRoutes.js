@@ -10,6 +10,7 @@ import {
   updateEvent,
   deleteEvent
 } from "../controllers/eventController.js";
+import { eventValidator } from "../validators/eventValidator.js";
 
 const router = express.Router();
 
@@ -49,4 +50,19 @@ router.delete(
   deleteEvent
 );
 
+router.post(
+  "/",
+  authMiddleware,
+  roleMiddleware("ORGANIZER", "ADMIN", "SUPER_ADMIN"),
+  eventValidator,
+  createEvent
+);
+
+router.put(
+  "/:id",
+  authMiddleware,
+  roleMiddleware("ORGANIZER", "ADMIN", "SUPER_ADMIN"),
+  eventValidator,
+  updateEvent
+);
 export default router;
