@@ -13,12 +13,14 @@ export const registerForEvent = async (registrationData) => {
 };
 
 export const checkRegistration = async (userId, eventId) => {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("registrations")
     .select("*")
     .eq("user_id", userId)
     .eq("event_id", eventId)
     .maybeSingle();
+
+  if (error) throw error;
 
   return data;
 };
@@ -31,7 +33,7 @@ export const getParticipants = async (eventId) => {
       status,
       registered_at,
       attendance_status,
-      users (
+      users(
         id,
         name,
         email,

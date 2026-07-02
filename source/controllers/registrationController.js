@@ -2,7 +2,6 @@ import * as registrationService from "../services/registrationService.js";
 
 export const register = async (req, res, next) => {
   try {
-
     const registration =
       await registrationService.registerForEvent(
         req.user.id,
@@ -14,7 +13,6 @@ export const register = async (req, res, next) => {
       message: "Registered successfully",
       data: registration,
     });
-
   } catch (error) {
     next(error);
   }
@@ -22,17 +20,13 @@ export const register = async (req, res, next) => {
 
 export const getParticipants = async (req, res, next) => {
   try {
-
     const participants =
-      await registrationService.getParticipants(
-        req.params.id
-      );
+      await registrationService.getParticipants(req.params.id);
 
     res.status(200).json({
       success: true,
       data: participants,
     });
-
   } catch (error) {
     next(error);
   }

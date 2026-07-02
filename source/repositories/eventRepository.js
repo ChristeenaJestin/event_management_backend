@@ -14,9 +14,7 @@ export const createEvent = async (eventData) => {
 
 export const getAllEvents = async () => {
   const { data, error } = await supabase
-    .from("events")
-    .select("*")
-    .order("start_date", { ascending: true });
+    .rpc("get_events_with_count");
 
   if (error) throw error;
 
@@ -36,6 +34,9 @@ export const getEventById = async (id) => {
 };
 
 export const updateEvent = async (id, updates) => {
+  console.log("Updating Event:", id);
+  console.log(updates);
+
   const { data, error } = await supabase
     .from("events")
     .update(updates)
@@ -43,7 +44,10 @@ export const updateEvent = async (id, updates) => {
     .select()
     .single();
 
-  if (error) throw error;
+  if (error) {
+    console.log(error);
+    throw error;
+  }
 
   return data;
 };

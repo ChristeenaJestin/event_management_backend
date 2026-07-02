@@ -4,7 +4,7 @@ import roleMiddleware from "../middleware/roleMiddleware.js";
 
 import {
   register,
-  getParticipants
+  getParticipants,
 } from "../controllers/registrationController.js";
 
 const router = express.Router();
